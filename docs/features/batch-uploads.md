@@ -26,11 +26,7 @@ Files are uploaded sequentially, each with a shared `batchId`. The upload page s
 
 When all files complete, a **"View Batch Report"** button appears.
 
-:::info[Screenshot Placeholder]
-
-TODO: Add screenshot of the batch upload progress view
-
-:::
+![Batch upload progress view](/img/screenshots/batch-upload-progress.png)
 
 ## Batch Report
 
@@ -54,11 +50,7 @@ A table showing each file with columns for:
 ### Subtype Breakdown
 Aggregate charts showing the distribution of issue subtypes across all files in the batch — for example, how many Fabricated Citations vs. Self-Contradictions were found across the entire batch.
 
-:::info[Screenshot Placeholder]
-
-TODO: Add screenshot of the batch report page
-
-:::
+![Batch report page](/img/screenshots/batch-report.png)
 
 ## Viewing Past Batches
 

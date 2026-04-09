@@ -47,14 +47,13 @@ const config: Config = {
     navbar: {
       title: 'oversight',
       items: [
-        {to: '/demo', label: 'Demo', position: 'left'},
+        {to: '/docs/demo', label: 'Demo', position: 'left'},
         {to: '/docs/setup', label: 'Setup Guide', position: 'left'},
         {to: '/docs/how-it-works', label: 'How It Works', position: 'left'},
         {to: '/docs/architecture', label: 'Architecture', position: 'left'},
         {to: '/docs/contribute', label: 'Contributing', position: 'left'},
         {
-          type: 'docSidebar',
-          sidebarId: 'docsSidebar',
+          to: '/docs/getting-started',
           position: 'left',
           label: 'Docs',
         },

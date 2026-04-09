@@ -9,11 +9,7 @@ This page describes the system topology for the Oversight beta release, includin
 
 ## Architecture Diagram
 
-:::info[Diagram Placeholder]
-
-TODO: Add architecture diagram image showing the full system topology
-
-:::
+![System Topology](/img/system-topology.png)
 
 ---
 

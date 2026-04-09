@@ -61,8 +61,4 @@ Trends include data from both:
 - **File uploads** — Conversations uploaded via `/upload`
 - **Chat sessions** — Live chatbot conversations that were analyzed after completion
 
-:::info[Screenshot Placeholder]
-
-TODO: Add screenshot of the trends page showing daily chart and subtype breakdown
-
-:::
+![Trends page with daily chart and subtype breakdown](/img/screenshots/trends-detail.png)

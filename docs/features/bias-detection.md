@@ -52,11 +52,7 @@ On the analysis dashboard, the **Bias** tab displays:
 - **Subtype breakdown** — Visual summary of which bias types were detected across the conversation
 - **Provider selector** — In "Both" mode, switch between Gemini, Groq, and cross-checked results
 
-:::info[Screenshot Placeholder]
-
-TODO: Add screenshot of the Bias tab showing flagged turns with subtype labels
-
-:::
+![Bias tab with flagged turns and subtype labels](/img/screenshots/bias-tab.png)
 
 ## Configuring Sensitivity
 

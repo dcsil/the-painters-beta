@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&family=Space+Grotesk:wght@300;400;500&display=swap');
 
 :root {
   --ifm-color-primary: #2563eb;
@@ -57,45 +57,31 @@
 }
 
 .hero__catchline {
-  font-size: 1.05rem;
-  opacity: 0.75;
-  max-width: 640px;
-  margin: 0.75rem auto 0;
-  line-height: 1.6;
+  font-family: 'Caveat', cursive;
+  font-size: 1.75rem;
+  font-weight: 500;
+  max-width: 700px;
+  margin: 1.25rem auto 0;
+  line-height: 1.5;
+  opacity: 0.8;
 }
 
-/* Video + paragraph side-by-side */
-.hero__content-row {
-  display: flex;
-  gap: 2.5rem;
-  align-items: flex-start;
-  max-width: 960px;
+/* Hero video — centered above description */
+.hero__video {
+  max-width: 720px;
   margin: 2.5rem auto 0;
+}
+
+.hero__description {
+  max-width: 720px;
+  margin: 2rem auto 0;
   text-align: left;
-}
-
-.hero__content-row .video-placeholder,
-.hero__content-row .video-container {
-  flex: 1;
-  min-width: 0;
-  margin: 0;
-  max-width: none;
-}
-
-.hero__content-row .hero__description {
-  flex: 1;
-  min-width: 0;
   font-size: 0.95rem;
   line-height: 1.75;
   opacity: 0.85;
 }
 
 @media (max-width: 768px) {
-  .hero__content-row {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
   .hero__title {
     font-size: 2.5rem;
   }

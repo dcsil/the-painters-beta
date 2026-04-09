@@ -49,6 +49,8 @@ Each alert email includes:
 - **Link to dashboard** — Direct link to the analysis results page
 - **Timestamp** — When the analysis was completed
 
+![Email alert example](/img/screenshots/email-alert.png)
+
 ## Requirements
 
 | Requirement | Purpose |
