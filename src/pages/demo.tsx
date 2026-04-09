@@ -1,6 +1,5 @@
 import React from 'react';
 import Layout from '@theme/Layout';
-import Link from '@docusaurus/Link';
 
 function Demo(): React.JSX.Element {
   return (
@@ -21,15 +20,6 @@ function Demo(): React.JSX.Element {
         <div className="video-placeholder">
           <p><strong>Tutorial / Demo Video</strong></p>
           <p>TODO: Replace with YouTube embed once video is ready</p>
-        </div>
-
-        <div className="cta-buttons" style={{justifyContent: 'flex-start'}}>
-          <Link className="button button--primary button--lg" to="/docs/setup">
-            Setup Guide
-          </Link>
-          <Link className="button button--secondary button--lg" to="/docs/getting-started">
-            Getting Started
-          </Link>
         </div>
       </div>
     </Layout>
