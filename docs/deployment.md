@@ -109,8 +109,10 @@ If using a local PostgreSQL:
 npx prisma migrate deploy
 ```
 
-:::warning Local PostgreSQL
+:::warning[Local PostgreSQL]
+
 If using a local PostgreSQL (not Neon), the Prisma adapter configuration in `lib/prisma.ts` uses the Neon adapter. You may need to modify the Prisma client setup to use the standard adapter instead for a non-Neon PostgreSQL.
+
 :::
 
 ### Step 4: Build and Start

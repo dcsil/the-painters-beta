@@ -54,8 +54,10 @@ On the analysis dashboard, the **Hallucination** tab displays:
 - **Confidence bar** — A visual indicator of how confident the model is in the detection
 - **Provider selector** — In "Both" mode, you can switch between Gemini, Groq, and cross-checked results
 
-:::info Screenshot Placeholder
+:::info[Screenshot Placeholder]
+
 TODO: Add screenshot of the Hallucination tab showing flagged turns
+
 :::
 
 ## Tips

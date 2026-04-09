@@ -9,8 +9,10 @@ This page describes the system topology for the Oversight beta release, includin
 
 ## Architecture Diagram
 
-:::info Diagram Placeholder
+:::info[Diagram Placeholder]
+
 TODO: Add architecture diagram image showing the full system topology
+
 :::
 
 ---
@@ -65,22 +67,25 @@ The database consists of 9 models:
 
 ---
 
-## Alpha → Beta Changes
+## Architecture Rationale
 
-The system topology is unchanged from alpha. The same components (Next.js, Neon PostgreSQL, Vercel Blob, Gemini, Groq, Resend, NextAuth) remain in the same architectural positions.
+The system topology is unchanged since the alpha release. The same components — Next.js, Neon PostgreSQL, Vercel Blob, Google Gemini, Groq Llama, Resend, and NextAuth — remain in the same architectural positions. No components were added, removed, or re-positioned, and no new external services were introduced.
 
-Beta additions were **functional enhancements** within the existing component structure:
+The alpha release served as a validation milestone for the full architecture. Through alpha testing, we confirmed that:
 
-| Enhancement | Type |
-|---|---|
-| Rate limiting (5/min, 40/day for uploads and chat; 5/min, 20/day for feedback) | New `RateLimit` model + middleware in API routes |
-| Terms & Conditions modal | New `UserPreferences` fields (`termsAcceptedAt`, `termsVersion`) |
-| In-app feedback button | New `Feedback` model + `POST /api/feedback` endpoint |
-| Model fallback chains (Gemini + Groq) | Enhanced `lib/gemini.ts` and `lib/groq.ts` |
-| Health endpoint | New `GET /api/health` route |
-| Trends count/rate toggle | Enhanced `GET /api/trends` response + frontend toggle |
-| GitHub contribution infrastructure | Issue templates, PR template, CONTRIBUTING.md, CODE_OF_CONDUCT.md |
-| Beta-readiness documentation | Bug severity audit, security controls review, external tester framework |
-| Bug fixes | Trends daily rate calculation, batch upload count, chat interaction inclusion in trends |
+- The **dual-LLM analysis pipeline** (Gemini + Groq with cross-checking) produces reliable detection results across all three categories
+- **Vercel serverless functions** handle the analysis workload within the 120-second timeout, including "Both" mode which runs providers sequentially
+- **Neon connection pooling** via the Prisma adapter handles concurrent database access without connection exhaustion
+- **Live chat monitoring** delivers real-time per-message checks with acceptable latency for the customer-facing chatbot
 
-No components were added, removed, or re-positioned. No new external services were introduced.
+Alpha testing also helped us identify and document known issues. A formal **bug severity audit** classified all discovered bugs by severity (Critical, High, Medium, Low). The key finding was that **zero Critical or High severity bugs** remained open — all were either resolved or classified as Medium/Low with documented mitigations:
+
+| Bug ID | Severity | Description | Status |
+|---|---|---|---|
+| BUG-001 | Medium | Simulated progress bar does not reflect actual backend progress | Documented; deferred to GA |
+| BUG-002 | High | No rate limiting on public chat API | **Resolved** — enforces 5/min, 40/day per IP |
+| BUG-003 | Medium | Session completion endpoint lacks ownership check | Mitigated by CUID non-enumerability |
+| BUG-004 | Low | Chat-originated uploads have null userId | Accepted trade-off for internal analyst scope |
+| BUG-005 | Low | Vercel Blob URLs are publicly accessible if known | Accepted; non-enumerable filenames |
+
+This validation gave us confidence that the architecture is sound for beta release without structural changes.

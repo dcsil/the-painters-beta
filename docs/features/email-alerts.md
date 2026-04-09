@@ -57,8 +57,10 @@ Each alert email includes:
 | Alert email set in `/settings` | Tells Oversight where to send your alerts |
 
 :::tip
+
 If emails aren't arriving, check:
 1. `RESEND_API_KEY` is set correctly in `.env.local`
 2. Your alert email is saved in Settings
 3. Check your spam/junk folder
+
 :::

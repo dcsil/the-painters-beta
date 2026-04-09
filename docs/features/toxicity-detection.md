@@ -56,8 +56,10 @@ On the analysis dashboard, the **Toxicity** tab displays:
 - **Severity indicators** — Color-coded badges (green/yellow/red) for Low/Medium/High severity
 - **Provider selector** — Switch between provider results in "Both" mode
 
-:::info Screenshot Placeholder
+:::info[Screenshot Placeholder]
+
 TODO: Add screenshot of the Toxicity tab showing flagged turns with severity levels
+
 :::
 
 ## Tips

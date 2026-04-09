@@ -13,8 +13,10 @@ This page provides visual walkthroughs of the primary user journeys in Oversight
 
 This is the primary workflow for analyzing a pre-recorded chatbot conversation.
 
-:::info Infographic Placeholder
+:::info[Infographic Placeholder]
+
 TODO: Add workflow infographic for the file upload flow
+
 :::
 
 **Text description of the flow:**
@@ -42,8 +44,10 @@ TODO: Add workflow infographic for the file upload flow
 
 This workflow covers a customer interacting with the live chatbot and the automatic quality monitoring.
 
-:::info Infographic Placeholder
+:::info[Infographic Placeholder]
+
 TODO: Add workflow infographic for the live chat monitoring flow
+
 :::
 
 **Text description of the flow:**
@@ -77,8 +81,10 @@ TODO: Add workflow infographic for the live chat monitoring flow
 
 This workflow covers an analyst observing active and recent chat sessions.
 
-:::info Infographic Placeholder
+:::info[Infographic Placeholder]
+
 TODO: Add workflow infographic for the analyst monitoring dashboard
+
 :::
 
 **Text description of the flow:**
@@ -102,8 +108,10 @@ TODO: Add workflow infographic for the analyst monitoring dashboard
 
 This workflow covers uploading and analyzing multiple files at once.
 
-:::info Infographic Placeholder
+:::info[Infographic Placeholder]
+
 TODO: Add workflow infographic for the batch upload flow
+
 :::
 
 **Text description of the flow:**

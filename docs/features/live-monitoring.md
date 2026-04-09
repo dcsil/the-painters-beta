@@ -52,8 +52,10 @@ The monitoring panel appears below the chat interface and shows:
 - **Violation banner** — A red banner displayed when a violation is triggered, indicating "Live agent required"
 - **Loading skeleton** — Shown while monitoring is in progress for the latest message
 
-:::info Screenshot Placeholder
+:::info[Screenshot Placeholder]
+
 TODO: Add screenshot of the monitoring panel showing bias score bars and a violation banner
+
 :::
 
 ## Analyst Monitoring Dashboard
@@ -72,8 +74,10 @@ Analysts can observe live and recent sessions at `/monitor`:
   - Bias score visualization per message
   - Violation indicators when thresholds are breached
 
-:::info Screenshot Placeholder
+:::info[Screenshot Placeholder]
+
 TODO: Add screenshot of the /monitor dashboard showing the sidebar and detail panel
+
 :::
 
 ## Configuring the Bias Threshold

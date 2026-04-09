@@ -121,32 +121,29 @@ For the full contribution guidelines, including development setup and testing pr
 
 ## External Contribution Evidence (Section 4.3)
 
-This section documents the lifecycle of an externally filed issue — from initial report through team response to resolution.
-
-:::warning TODO
-This section will be populated once an external contributor files an issue on the repository.
-
-**Planned evidence:**
-- Link to the filed external issue
-- Team's first response (within 24h SLA)
-- Triage decision and resolution/deferral reasoning
-
-**Suggested issue:** A bug report about the simulated processing progress bar (known issue BUG-001) — the progress animation does not reflect actual backend analysis progress, which can be misleading for users.
-:::
+This section documents the full lifecycle of an externally filed issue — from initial report through team response to triage decision — demonstrating our contribution workflow in practice.
 
 ### External Issue
 
-- **Issue:** TODO — Link to the filed GitHub issue
-- **Filed by:** TODO — External contributor username
-- **Date filed:** TODO
+- **Issue:** [#18 — Bug report: Processing page progress bar doesn't reflect actual analysis progress](https://github.com/dcsil/the-painters-product/issues/18)
+- **Filed by:** [@YehyunLee](https://github.com/YehyunLee) (Thomas) — external contributor, not a team member
+- **Date filed:** April 9, 2026
+- **Severity reported:** Medium
+- **Summary:** When uploading a file for analysis, the processing page shows a progress animation that goes from 0% to ~90% on a timer, then jumps to 100% when analysis completes. This is misleading as it doesn't reflect actual backend progress. For large files, the bar may stall at ~90% for a long time.
 
 ### Team Response
 
-- **First response:** TODO — Within \_\_ hours
-- **Response details:** TODO — Description of acknowledgment and triage
+- **First response:** Within 24 hours (within SLA) — [view comment](https://github.com/dcsil/the-painters-product/issues/18#issuecomment-4211648154)
+- **Response details:**
+  - Acknowledged the bug and thanked the contributor for the detailed report
+  - Identified the root cause: Vercel serverless functions cannot stream progress updates to the client mid-execution — the HTTP response is only sent once the function completes
+  - Confirmed this is a known issue tracked internally as **BUG-001** with **Medium** severity
+  - Explained that for "Both" analysis mode, analysis can take up to 120 seconds (the Vercel function timeout limit)
 
-### Resolution
+### Triage Decision
 
-- **Decision:** TODO — Fix, defer, or wont-fix with reasoning
-- **PR:** TODO — Link to PR if applicable
-- **Date resolved:** TODO
+- **Labels applied:** `bug`, `triaged`, `medium-severity`, `deferred`
+- **Decision:** **Deferred to GA release**
+- **Reasoning:** Implementing real-time progress tracking would require a fundamentally different architecture (WebSocket connections, a queue-based system, or server-sent events with a persistent server). This is out of scope for the current beta release but is planned for the GA milestone.
+- **Current mitigation:** The behavior is documented in the [Setup Guide](/docs/setup#step-8-verify-everything-works) and [Troubleshooting FAQ](/docs/troubleshooting#processing-page-progress-bar-is-stuck) so users know to expect this behavior.
+- **Issue status:** Open — tracked for GA

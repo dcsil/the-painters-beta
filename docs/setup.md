@@ -5,6 +5,12 @@ title: Setup Guide
 
 # Setup Guide
 
+:::tip[Using the Deployed Version?]
+
+This guide is for **running Oversight locally** on your own machine (development or self-hosting). If you just want to use the deployed version of Oversight, skip this page and head straight to the [Getting Started](/docs/getting-started) guide — the app is live at [the-painters-product.vercel.app](https://the-painters-product.vercel.app).
+
+:::
+
 This guide walks you through installing, configuring, and launching Oversight from scratch. Each step is discrete and ordered — follow them in sequence. No prior knowledge of the codebase is required.
 
 ## Prerequisites
@@ -48,9 +54,11 @@ npm install
 
 **Expected output:** Dependencies install and you should see `prisma generate` run automatically (via the `postinstall` hook). The Prisma client is generated in `node_modules/.prisma/client`.
 
-:::warning If npm install fails
+:::warning[If npm install fails]
+
 - Ensure you are using Node.js 18 or later: `node --version`
 - Delete `node_modules` and `package-lock.json`, then retry: `rm -rf node_modules package-lock.json && npm install`
+
 :::
 
 ---
@@ -65,8 +73,10 @@ npm install
    postgresql://user:password@ep-xxx-xxx-pooler.region.aws.neon.tech/dbname?sslmode=require
    ```
 
-:::danger Use the pooled connection string
+:::danger[Use the pooled connection string]
+
 Oversight uses Neon's connection pooler via the `@prisma/adapter-neon` package. Using the direct (non-pooled) connection string will cause `PrismaClientInitializationError` at runtime.
+
 :::
 
 ---
@@ -138,10 +148,12 @@ Applying migration 20260325_add_rate_limiting ...
 Applied N migration(s) successfully.
 ```
 
-:::warning If migrations fail
+:::warning[If migrations fail]
+
 - **`PrismaClientInitializationError`**: Your `DATABASE_URL` is incorrect or not using the pooled connection string
 - **Connection timeout**: Check that your Neon project is active (free-tier projects may pause after inactivity)
 - **Permission denied**: Ensure the connection string includes write permissions
+
 :::
 
 ---
@@ -188,8 +200,10 @@ Upload a sample conversation file to confirm the full pipeline is working:
 
 **Expected result:** The dashboard shows results across the Overview, Hallucination, Bias, and Toxicity tabs. The hallucination tab should flag at least one issue.
 
-:::info About the processing animation
+:::info[About the processing animation]
+
 The processing page shows a simulated progress bar that animates from 0% to ~90%, then jumps to 100% when analysis actually completes. This is a known UX limitation due to Vercel's serverless architecture — the actual backend analysis cannot stream progress updates.
+
 :::
 
 ---

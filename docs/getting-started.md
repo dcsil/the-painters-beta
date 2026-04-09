@@ -13,8 +13,10 @@ This guide assumes you have completed the [Setup Guide](/docs/setup) and have Ov
 2. Enter your email, name (optional), and password (minimum 8 characters)
 3. Click **Sign Up** — you will be automatically logged in
 
-:::info Screenshot Placeholder
+:::info[Screenshot Placeholder]
+
 TODO: Add screenshot of the signup page
+
 :::
 
 ---
@@ -31,8 +33,10 @@ Before your first analysis, configure your preferences at `/settings`:
 3. **Alert Email** — Enter your email to receive notifications when chat session analyses complete
 4. **Bias Threshold** — Set the live monitoring sensitivity (0–100, default 70). A lower threshold triggers violations more easily
 
-:::info Screenshot Placeholder
+:::info[Screenshot Placeholder]
+
 TODO: Add screenshot of the settings page
+
 :::
 
 ---
@@ -49,8 +53,10 @@ TODO: Add screenshot of the settings page
 5. Wait on the processing page (up to 60 seconds for the analysis to complete)
 6. Review results on the analysis dashboard
 
-:::info Screenshot Placeholder
+:::info[Screenshot Placeholder]
+
 TODO: Add screenshot of the upload page with a file selected
+
 :::
 
 ### Reading the Dashboard
@@ -62,8 +68,10 @@ The analysis dashboard has four tabs:
 - **Bias** — Flagged turns with subtype (Gender, Racial, Age, Stereotyping), reason, and confidence score
 - **Toxicity** — Flagged turns with subtype (Hostile Language, Condescension, Inappropriate Content, Profanity) and severity level
 
-:::info Screenshot Placeholder
+:::info[Screenshot Placeholder]
+
 TODO: Add screenshot of the analysis dashboard with results
+
 :::
 
 ---
@@ -81,8 +89,10 @@ The chatbot simulates a customer support interaction and is publicly accessible 
 5. If a violation is detected (hallucination flagged OR bias score exceeds threshold), the session is automatically ended, a "live agent required" message is shown, and alert emails are sent to all analysts with an alert email configured
 6. Otherwise, click **End Chat** when done — this triggers a full analysis of the entire conversation
 
-:::info Screenshot Placeholder
+:::info[Screenshot Placeholder]
+
 TODO: Add screenshot of the chatbot with monitoring panel visible
+
 :::
 
 ---
@@ -100,8 +110,10 @@ As an analyst, you can watch active and recent chat sessions in real time:
    - **Violated** (red) — Ended due to a violation
    - **Ended** (gray) — Completed normally
 
-:::info Screenshot Placeholder
+:::info[Screenshot Placeholder]
+
 TODO: Add screenshot of the monitoring dashboard with an active session
+
 :::
 
 ---
@@ -116,8 +128,10 @@ Track analysis trends over time at `/trends`:
 4. View subtype breakdowns for hallucination, bias, and toxicity categories
 5. Compare with the prior period to see trends
 
-:::info Screenshot Placeholder
+:::info[Screenshot Placeholder]
+
 TODO: Add screenshot of the trends page
+
 :::
 
 ---

@@ -55,8 +55,10 @@ The built-in ground truth is read-only and available to all users. It pairs with
 3. Select a ground truth document from the list (includes built-in + your custom documents)
 4. Proceed with the upload — the selected ground truth is sent to the LLM alongside the conversation
 
-:::info Screenshot Placeholder
+:::info[Screenshot Placeholder]
+
 TODO: Add screenshot of the ground truth selector on the upload page
+
 :::
 
 ## Managing Ground Truth
@@ -67,6 +69,8 @@ On the `/ground-truth` page you can:
 - **Download** — Download the document file
 - **Delete** — Remove your custom ground truth documents (built-in documents cannot be deleted)
 
-:::info Screenshot Placeholder
+:::info[Screenshot Placeholder]
+
 TODO: Add screenshot of the ground truth management page
+
 :::

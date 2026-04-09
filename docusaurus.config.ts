@@ -3,8 +3,8 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'Oversight',
-  tagline: 'AI Chatbot Conversation Quality Assurance — by The pAInters',
+  title: 'oversight',
+  tagline: 'Trust, but verify.',
   favicon: 'img/favicon.ico',
 
   future: {
@@ -41,13 +41,17 @@ const config: Config = {
 
   themeConfig: {
     colorMode: {
-      defaultMode: 'dark',
+      defaultMode: 'light',
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'Oversight',
+      title: 'oversight',
       items: [
         {to: '/demo', label: 'Demo', position: 'left'},
+        {to: '/docs/setup', label: 'Setup Guide', position: 'left'},
+        {to: '/docs/how-it-works', label: 'How It Works', position: 'left'},
+        {to: '/docs/architecture', label: 'Architecture', position: 'left'},
+        {to: '/docs/contribute', label: 'Contributing', position: 'left'},
         {
           type: 'docSidebar',
           sidebarId: 'docsSidebar',
@@ -82,6 +86,7 @@ const config: Config = {
           items: [
             {label: 'Live App', href: 'https://the-painters-product.vercel.app'},
             {label: 'GitHub Repository', href: 'https://github.com/dcsil/the-painters-product'},
+            {label: 'System Status', href: 'https://stats.uptimerobot.com/SESeBZRKbf'},
           ],
         },
         {
@@ -93,7 +98,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} The pAInters — CSC491, University of Toronto. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} The pAInters — CSC491, University of Toronto.`,
     },
     prism: {
       theme: prismThemes.github,
