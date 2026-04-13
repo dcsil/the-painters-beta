@@ -16,7 +16,7 @@ able to go from zero to completing the primary workflow without additional docum
 <div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: '8px', boxShadow: '0 4px 24px rgba(0,0,0,0.1)'}}>
   <iframe
     style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0}}
-    src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+    src="https://www.youtube.com/embed/GoSVRa2mz50?rel=0&modestbranding=1"
     title="Oversight Demo & Tutorial"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
     allowFullScreen

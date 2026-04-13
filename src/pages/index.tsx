@@ -15,7 +15,7 @@ function Home(): React.JSX.Element {
           <div className="hero__video">
             <div className="video-container">
               <iframe
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                src="https://www.youtube.com/embed/jjpF-YybdQc?rel=0&modestbranding=1"
                 title="Oversight Promotional Video"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
