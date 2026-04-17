@@ -1,0 +1,325 @@
+/* Workflow infographic — two-lane (User | System) journey map */
+
+.diagram {
+  --wf-user-bg: var(--ifm-color-primary);
+  --wf-user-fg: #ffffff;
+  --wf-user-band: color-mix(in srgb, var(--ifm-color-primary) 14%, transparent);
+  --wf-system-bg: var(--ifm-color-emphasis-200);
+  --wf-system-fg: var(--ifm-color-emphasis-900);
+  --wf-system-band: color-mix(in srgb, var(--ifm-color-emphasis-500) 12%, transparent);
+  --wf-error-fg: #b42318;
+  --wf-error-bg: #fef3f2;
+  --wf-error-border: #fda29b;
+  --wf-decision-border: color-mix(in srgb, var(--ifm-color-primary) 50%, transparent);
+  --wf-success-fg: #067647;
+  --wf-success-bg: color-mix(in srgb, #067647 12%, transparent);
+  --wf-arrow: var(--ifm-color-emphasis-500);
+
+  font-family: 'Space Grotesk', var(--ifm-font-family-base);
+  margin: 1.75rem 0 2.25rem;
+  padding: 1.5rem 1rem;
+  border-radius: 12px;
+  background: var(--ifm-color-emphasis-100);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  overflow-x: auto;
+}
+
+[data-theme='dark'] .diagram {
+  --wf-error-fg: #fecdca;
+  --wf-error-bg: #3b1612;
+  --wf-error-border: #b42318;
+  --wf-success-fg: #abefc6;
+  --wf-success-bg: #053321;
+}
+
+.title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  color: var(--ifm-color-emphasis-700);
+  margin: 0 0 1rem;
+  text-align: center;
+}
+
+.lanes {
+  display: grid;
+  grid-template-columns: 1fr 80px 1fr;
+  column-gap: 0;
+  min-width: 560px;
+}
+
+.laneHeader {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-align: center;
+  border-radius: 8px 8px 0 0;
+  margin-bottom: 0.5rem;
+}
+
+.laneHeaderUser {
+  background: var(--wf-user-band);
+  color: var(--ifm-color-primary);
+}
+
+.laneHeaderSystem {
+  background: var(--wf-system-band);
+  color: var(--ifm-color-emphasis-700);
+}
+
+.spacer {
+  /* empty center column */
+}
+
+.row {
+  display: contents;
+}
+
+.cell {
+  padding: 0 0.25rem 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.cellUser {
+  justify-content: flex-end;
+}
+
+.cellSystem {
+  justify-content: flex-start;
+}
+
+.cellEmpty {
+  padding: 0;
+}
+
+.connector {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  position: relative;
+  min-height: 40px;
+  padding-bottom: 1rem;
+}
+
+.card {
+  position: relative;
+  background: var(--wf-system-bg);
+  color: var(--wf-system-fg);
+  border-radius: 10px;
+  padding: 0.75rem 0.85rem;
+  width: 100%;
+  max-width: 280px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+}
+
+.cardUser {
+  background: var(--wf-user-bg);
+  color: var(--wf-user-fg);
+}
+
+.iconBadge {
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.cardSystem .iconBadge {
+  background: var(--ifm-color-emphasis-300);
+}
+
+.iconBadge svg {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2;
+}
+
+.cardBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.label {
+  font-weight: 500;
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.detail {
+  font-size: 0.75rem;
+  line-height: 1.35;
+  margin-top: 0.2rem;
+  opacity: 0.82;
+}
+
+.stepIndex {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--ifm-background-color);
+  border: 1.5px solid var(--ifm-color-emphasis-400);
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.7rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.errorPill {
+  margin-top: 0.5rem;
+  padding: 0.45rem 0.6rem;
+  background: var(--wf-error-bg);
+  color: var(--wf-error-fg);
+  border: 1px dashed var(--wf-error-border);
+  border-radius: 8px;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  display: flex;
+  gap: 0.4rem;
+  align-items: flex-start;
+}
+
+.errorPill::before {
+  content: '⚠';
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.decision {
+  grid-column: 1 / -1;
+  margin: 0.25rem auto 1rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: 10px;
+  border: 1.5px solid var(--wf-decision-border);
+  background: color-mix(in srgb, var(--ifm-color-primary) 5%, transparent);
+  max-width: 640px;
+  width: 100%;
+}
+
+.decisionHeader {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--ifm-color-primary);
+  margin-bottom: 0.55rem;
+}
+
+.decisionHeader::before {
+  content: '◆';
+  font-size: 0.7rem;
+}
+
+.branches {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.5rem;
+}
+
+.branch {
+  padding: 0.5rem 0.65rem;
+  background: var(--wf-success-bg);
+  color: var(--wf-success-fg);
+  border-radius: 8px;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.branchError {
+  background: var(--wf-error-bg);
+  color: var(--wf-error-fg);
+}
+
+.branchLabel {
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.branchOutcome {
+  font-size: 0.78rem;
+}
+
+/* connector arrows between consecutive steps */
+.arrow {
+  width: 100%;
+  height: 40px;
+  display: block;
+}
+
+.arrow path,
+.arrow line {
+  stroke: var(--wf-arrow);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.arrow polygon {
+  fill: var(--wf-arrow);
+}
+
+/* responsive: stack lanes on narrow screens */
+@media (max-width: 640px) {
+  .diagram {
+    padding: 1rem 0.5rem;
+  }
+  .lanes {
+    grid-template-columns: 1fr;
+    min-width: 0;
+  }
+  .row {
+    display: block;
+  }
+  .laneHeaderSystem,
+  .spacer {
+    display: none;
+  }
+  .laneHeaderUser {
+    background: var(--wf-system-band);
+    color: var(--ifm-color-emphasis-700);
+  }
+  .cell {
+    padding: 0 0 0.75rem;
+    justify-content: flex-start;
+  }
+  .cell.cellEmpty {
+    display: none;
+  }
+  .connector {
+    display: none;
+  }
+  .card {
+    max-width: none;
+  }
+  .decision {
+    max-width: none;
+  }
+  /* linearise: only the active lane's cell shows per row */
+  .rowUser > .cellSystem,
+  .rowSystem > .cellUser {
+    display: none;
+  }
+}

@@ -36,7 +36,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'doc',
       id: 'how-it-works',
-      label: 'How It Works',
+      label: 'Workflow Infographics',
     },
     {
       type: 'doc',

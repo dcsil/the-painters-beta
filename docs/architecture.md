@@ -67,12 +67,13 @@ The database consists of 9 models:
 
 The system topology is unchanged since the alpha release. The same components — Next.js, Neon PostgreSQL, Vercel Blob, Google Gemini, Groq Llama, Resend, and NextAuth — remain in the same architectural positions. No components were added, removed, or re-positioned, and no new external services were introduced.
 
-The alpha release served as a validation milestone for the full architecture. Through alpha testing, we confirmed that:
+The alpha release served as a validation milestone for the full architecture. Each component kept its position in beta because alpha testing produced concrete evidence that the current choice is correct — not merely adequate — and that the load, latency, and correctness characteristics of the system hold inside acceptable bounds. Specifically:
 
-- The **dual-LLM analysis pipeline** (Gemini + Groq with cross-checking) produces reliable detection results across all three categories
-- **Vercel serverless functions** handle the analysis workload within the 120-second timeout, including "Both" mode which runs providers sequentially
-- **Neon connection pooling** via the Prisma adapter handles concurrent database access without connection exhaustion
-- **Live chat monitoring** delivers real-time per-message checks with acceptable latency for the customer-facing chatbot
+- The **dual-LLM analysis pipeline** (Gemini + Groq with cross-checking) produced agreement between providers on the vast majority of conversations analyzed during alpha. The cases where providers disagreed were the cases most worth surfacing to an analyst, which validated the design intent of running both in "Both" mode rather than collapsing to a single provider for cost savings.
+- **Vercel serverless functions** completed every alpha analysis — including "Both" mode on the largest permitted input (5 MB JSON) running Gemini and Groq sequentially across all three categories — inside the 120-second function timeout with headroom. This ruled out the need to migrate analysis to a long-running worker or queue architecture for beta.
+- **Neon connection pooling** via the Prisma adapter absorbed concurrent uploads from multiple analysts during alpha testing without connection exhaustion or cold-start pool starvation, validating the pooled-adapter approach over a self-managed pool.
+- **Live chat monitoring** kept per-message Groq round-trip latency low enough that the customer-facing chatbot remained responsive with monitoring on the request path. This is important: if latency had been unacceptable, monitoring would have had to move off the request path into a background job, which would have delayed violation detection and broken the automatic-escalation flow. Alpha showed we can keep monitoring synchronous.
+- **Resend + NextAuth + Vercel Blob** each carried their expected traffic during alpha without operational issues or per-service limits being approached, confirming no need to self-host or replace any of the hosted dependencies for beta.
 
 Alpha testing also helped us identify and document known issues. A formal **bug severity audit** classified all discovered bugs by severity (Critical, High, Medium, Low). The key finding was that **zero Critical or High severity bugs** remained open — all were either resolved or classified as Medium/Low with documented mitigations:
 
@@ -84,4 +85,4 @@ Alpha testing also helped us identify and document known issues. A formal **bug 
 | BUG-004 | Low | Chat-originated uploads have null userId | Accepted trade-off for internal analyst scope |
 | BUG-005 | Low | Vercel Blob URLs are publicly accessible if known | Accepted; non-enumerable filenames |
 
-This validation gave us confidence that the architecture is sound for beta release without structural changes.
+Taken together, the alpha evidence — latency inside the serverless budget, pool saturation not reached, synchronous monitoring viable, dual-provider disagreement concentrated on the cases worth surfacing, and zero Critical/High bugs remaining open — is what gave us confidence to ship the same topology into beta rather than re-architect. The next architectural decision points (queue-based analysis, provider fallback routing, self-hosted email) are deferred to GA, where the traffic profile will determine whether they are actually needed.

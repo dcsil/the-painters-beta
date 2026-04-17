@@ -1,0 +1,330 @@
+---
+sidebar_position: 4
+title: Workflow Infographics
+---
+
+import WorkflowDiagram from '@site/src/components/WorkflowDiagram';
+
+# Workflow Infographics
+
+This page provides visual walkthroughs of the primary user journeys in Oversight. Each workflow is shown as a two-lane infographic: the **User** lane on the left shows what the user does, and the **System** lane on the right shows what Oversight does in response. Decision points and error states are called out inline.
+
+---
+
+## Workflow 1: Analyst File Upload
+
+This is the primary workflow for analyzing a pre-recorded chatbot conversation.
+
+<WorkflowDiagram
+  title="Analyst File Upload"
+  steps={[
+    {
+      actor: 'user',
+      icon: 'files',
+      label: 'Select JSON file',
+      detail: 'On the /upload page · max 5 MB',
+    },
+    {
+      actor: 'system',
+      icon: 'shield',
+      label: 'Client-side validation',
+      detail: 'File type, size, JSON structure',
+      error: 'Invalid format or size → inline error shown',
+    },
+    {
+      actor: 'user',
+      icon: 'settings',
+      label: 'Configure analysis',
+      detail: 'Mode (Gemini / Groq / Both) · categories · optional ground truth',
+    },
+    {
+      actor: 'user',
+      icon: 'upload',
+      label: 'Click Upload',
+      detail: 'POST /api/upload',
+      error: 'Rate limit (5/min or 40/day) → HTTP 429',
+    },
+    {
+      actor: 'system',
+      icon: 'database',
+      label: 'Store file & create upload record',
+      detail: 'Vercel Blob + DB row with status = processing',
+    },
+    {
+      actor: 'system',
+      icon: 'search',
+      label: 'Run analysis pipeline',
+      detail: 'Hallucination · Bias · Toxicity in parallel via selected provider(s)',
+    },
+    {
+      actor: 'system',
+      icon: 'check',
+      label: 'Update upload status',
+      decision: {
+        label: 'Did any analysis succeed?',
+        branches: [
+          { label: 'Yes', outcome: 'status = completed' },
+          { label: 'No', outcome: 'status = failed · error stored', isError: true },
+        ],
+      },
+    },
+    {
+      actor: 'user',
+      icon: 'dashboard',
+      label: 'View analysis dashboard',
+      detail: '/dashboard/[id] · Overview · Hallucination · Bias · Toxicity tabs',
+    },
+  ]}
+/>
+
+**Text description of the flow:**
+
+1. **User selects a JSON file** on the `/upload` page
+2. **Client-side validation** — File type, size (≤ 5 MB), and JSON structure are checked
+   - *Error state:* Invalid format or size → inline error message shown
+3. **User configures analysis settings** — Analysis mode (Gemini/Groq/Both), analysis types (hallucination/bias/toxicity), and optional ground truth document
+4. **User clicks Upload** → `POST /api/upload` fires
+   - *Error state:* Rate limit exceeded (5/min or 40/day) → HTTP 429 shown
+5. **File is stored** to Vercel Blob storage
+6. **Upload record is created** in the database with status `processing`
+7. **Analysis pipeline runs** — Each selected category (hallucination, bias, toxicity) is analyzed in parallel using the selected provider(s)
+8. **User sees the processing page** (`/processing/[id]`) with a polling animation
+   - *Note:* The progress bar is simulated — it does not reflect actual backend progress
+9. **Upload status updated** to `completed` or `failed`
+   - *Error state:* All analyses fail → status set to `failed`, error message stored
+   - *Success:* At least one analysis category succeeds → status set to `completed`
+10. **User is redirected** to the analysis dashboard (`/dashboard/[id]`)
+11. **Dashboard displays results** across tabs: Overview, Hallucination, Bias, Toxicity
+
+---
+
+## Workflow 2: Live Chat Monitoring
+
+This workflow covers a customer interacting with the live chatbot and the automatic quality monitoring.
+
+<WorkflowDiagram
+  title="Live Chat Monitoring"
+  steps={[
+    {
+      actor: 'user',
+      icon: 'chat',
+      label: 'Customer opens /chat',
+      detail: 'No login required',
+    },
+    {
+      actor: 'user',
+      icon: 'send',
+      label: 'Send message',
+      detail: 'POST /api/chat',
+      error: 'Rate limit (5/min or 40/day per IP) → HTTP 429',
+    },
+    {
+      actor: 'system',
+      icon: 'bot',
+      label: 'Generate bot reply',
+      detail: 'Groq Llama',
+    },
+    {
+      actor: 'system',
+      icon: 'monitor',
+      label: 'Run live monitoring in parallel',
+      detail: 'Hallucination check (true/false) · Bias score (0–100)',
+    },
+    {
+      actor: 'system',
+      icon: 'shield',
+      label: 'Evaluate violation rules',
+      decision: {
+        label: 'Violation detected? (hallucination = true OR bias ≥ threshold)',
+        branches: [
+          { label: 'No', outcome: 'Conversation continues · results shown in panel' },
+          {
+            label: 'Yes',
+            outcome: 'End session · show "Live agent required" · run full analysis · email analysts',
+            isError: true,
+          },
+        ],
+      },
+    },
+    {
+      actor: 'user',
+      icon: 'check',
+      label: 'End chat (normal path)',
+      detail: 'If no violation occurred',
+    },
+    {
+      actor: 'system',
+      icon: 'search',
+      label: 'Finalize session',
+      detail: 'POST /api/chat/[id]/complete · full batch analysis · upload record (source: "chat")',
+    },
+    {
+      actor: 'system',
+      icon: 'bell',
+      label: 'Email all analysts',
+      detail: 'Resend → every analyst with alertEmail configured',
+    },
+  ]}
+/>
+
+**Text description of the flow:**
+
+1. **Customer visits `/chat`** (no login required)
+2. **Customer types a message** → `POST /api/chat`
+   - *Rate limit check:* 5/min, 40/day per IP address
+   - *Error state:* Rate limit exceeded → HTTP 429 returned
+3. **Bot reply generated** using Groq Llama
+4. **Live monitoring runs in parallel** on the latest assistant turn:
+   - Hallucination check → returns `true` or `false`
+   - Bias score check → returns a score from 0 to 100
+5. **Monitoring results displayed** in the monitoring panel below the chat
+6. **Decision point: Violation detected?**
+   - **No violation** — Conversation continues, monitoring result shown
+   - **Violation** (hallucination = true OR bias score ≥ analyst threshold):
+     1. Session is automatically ended
+     2. "Live agent required" message shown to customer
+     3. `POST /api/chat/[id]/complete` fires with violation details
+     4. Full batch analysis runs on the entire conversation
+     5. Alert emails sent to all analysts with `alertEmail` configured
+7. **On normal "End Chat"** (no violation path):
+   1. `POST /api/chat/[id]/complete` fires
+   2. Full batch analysis runs on the entire conversation
+   3. Alert emails sent to analysts
+   4. Upload record created with `source: "chat"`, visible in all analysts' upload history
+
+---
+
+## Workflow 3: Analyst Live Monitoring Dashboard
+
+This workflow covers an analyst observing active and recent chat sessions.
+
+<WorkflowDiagram
+  title="Analyst Live Monitoring Dashboard"
+  steps={[
+    {
+      actor: 'user',
+      icon: 'user',
+      label: 'Analyst opens /monitor',
+    },
+    {
+      actor: 'system',
+      icon: 'list',
+      label: 'Load session sidebar',
+      detail: 'GET /api/monitor/sessions · polls every 30 s · last 30 min window',
+    },
+    {
+      actor: 'user',
+      icon: 'search',
+      label: 'Click a session',
+      detail: 'Badge (Active / Violated / Ended) · message count · timestamp',
+    },
+    {
+      actor: 'system',
+      icon: 'chat',
+      label: 'Load message history',
+      detail: 'GET /api/chat/[id]',
+      decision: {
+        label: 'Session still active?',
+        branches: [
+          { label: 'Yes', outcome: 'Poll every 5 s for new messages' },
+          { label: 'No', outcome: 'Show static history' },
+        ],
+      },
+    },
+    {
+      actor: 'system',
+      icon: 'monitor',
+      label: 'Render per-message monitoring',
+      detail: 'Bias bar (green/yellow/red) · hallucination flag · violation banner if flagged',
+    },
+    {
+      actor: 'user',
+      icon: 'gear',
+      label: 'Adjust bias threshold',
+      detail: 'On /settings · tunes sensitivity for future sessions',
+    },
+  ]}
+/>
+
+**Text description of the flow:**
+
+1. **Analyst visits `/monitor`**
+2. **Session Sidebar** loads and polls `GET /api/monitor/sessions` every 30 seconds
+   - Shows sessions from the last 30 minutes
+   - Each session shows: status badge (Active/Violated/Ended), last message preview, message count, relative timestamp
+3. **Analyst clicks a session** in the sidebar
+4. **Session Detail Panel** loads the full message history via `GET /api/chat/[id]`
+   - If the session is active: polls every 5 seconds for new messages
+5. **Per-message monitoring results** are displayed:
+   - Bias score bar (color-coded: green/yellow/red based on threshold)
+   - Hallucination flag indicator
+   - Violation banner if the session was flagged
+6. **Analyst adjusts threshold** in `/settings` to tune sensitivity for future sessions
+
+---
+
+## Workflow 4: Batch Upload
+
+This workflow covers uploading and analyzing multiple files at once.
+
+<WorkflowDiagram
+  title="Batch Upload"
+  steps={[
+    {
+      actor: 'user',
+      icon: 'files',
+      label: 'Select up to 10 JSON files',
+      detail: 'On the /upload page',
+    },
+    {
+      actor: 'user',
+      icon: 'settings',
+      label: 'Configure shared settings',
+      detail: 'Mode · categories · optional ground truth (applied to all files)',
+    },
+    {
+      actor: 'system',
+      icon: 'upload',
+      label: 'Upload files sequentially',
+      detail: 'POST /api/upload per file · shared batchId',
+    },
+    {
+      actor: 'system',
+      icon: 'list',
+      label: 'Track per-file status',
+      decision: {
+        label: 'Per-file outcome',
+        branches: [
+          { label: 'Success', outcome: 'Pending → Uploading → Done' },
+          { label: 'Failure', outcome: 'Marked error · batch continues', isError: true },
+        ],
+      },
+    },
+    {
+      actor: 'user',
+      icon: 'check',
+      label: 'Click "View Batch Report"',
+      detail: 'Shown when all files complete',
+    },
+    {
+      actor: 'system',
+      icon: 'report',
+      label: 'Render batch report',
+      detail: '/batch/[batchId] · aggregate KPIs · per-file table · subtype breakdown · drill-down links',
+    },
+  ]}
+/>
+
+**Text description of the flow:**
+
+1. **User selects up to 10 JSON files** on the `/upload` page
+2. **Shared settings configured** — Analysis mode, analysis types, optional ground truth (same for all files)
+3. **Files uploaded sequentially** to `POST /api/upload`, each with a shared `batchId`
+   - Per-file status shown inline: Pending → Uploading → Done / Error
+   - *Error state:* Individual file fails → marked as error, other files continue
+4. **When all files complete** — "View Batch Report" button appears
+5. **Batch report at `/batch/[batchId]`** shows:
+   - Aggregate KPIs (total issues, detection rates across all files)
+   - Per-file results table sorted by issue count
+   - Subtype breakdown across all files
+   - Link to individual dashboard per file
